@@ -1,5 +1,6 @@
 package com.coco.demo.socketdemo.service;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 /**
  * @author wangzz
  */
+@Data
 @Slf4j
 @Component
 @ServerEndpoint("/webSocket")
@@ -49,7 +51,7 @@ public class WebSocket {
         }
     }
 
-    public void sendMessage(String message) {
+    public static void broadcast(String message) {
         for (WebSocket webSocket : webSocketSet) {
             log.error("【websocket消息】 广播消息，message={}", message);
             try {

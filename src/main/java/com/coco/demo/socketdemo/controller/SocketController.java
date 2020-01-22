@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author wangzz
  */
@@ -13,23 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class SocketController {
 
     @Autowired
-    private WebSocket webSocket;
+    HttpServletRequest request;
 
-    @RequestMapping("/")
+    @RequestMapping("/check")
     public String sendMessage() {
         return "启动成功！";
     }
 
-    @RequestMapping("send")
+    @RequestMapping("/broadcast")
     public String send(String msg) {
-        webSocket.sendMessage("msg:{" + msg + "}");
+        WebSocket.broadcast("msg:{" + msg + "}");
         return "消息发送成功！消息：{" + msg + "}";
     }
-
-    @RequestMapping("close")
-    public String close() {
-        webSocket.onClose();
-        return "关闭连接成功！";
-    }
-
+    
 }
